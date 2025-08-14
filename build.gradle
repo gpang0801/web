@@ -16,13 +16,38 @@ apply plugin: 'io.spring.dependency-management'
 
 group = 'com.example'
 version = '1.0.0'
-sourceCompatibility = 1.8
+sourceCompatibility = 11 // JDK 버전에 맞춰 설정
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    // 웹 애플리케이션
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // JPA
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'com.h2database:h2' // H2는 메모리 DB
+
+    // Mustache 템플릿 엔진
+    implementation 'org.springframework.boot:spring-boot-starter-mustache'
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+    // 테스트
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.projectlombok:lombok:1.18.30'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
+}
+
+// Lombok 관련 JDK 9 이상 지원 설정
+allprojects {
+    tasks.withType(JavaCompile).configureEach {
+        options.compilerArgs += [
+                '--add-exports', 'jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED'
+        ]
+    }
 }
