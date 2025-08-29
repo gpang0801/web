@@ -42,3 +42,6 @@ bin/
 .DS_Store
 
 application-oauth.properties
+# OAuth secrets
+/src/main/resources/application-oauth.properties
+/src/main/resources/application-ouath.properties
